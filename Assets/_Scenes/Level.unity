@@ -228,6 +228,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   follow: {fileID: 1330031858}
+  zDistance: 10
+  allowableOffset: 2
+  speed: 12
 --- !u!1 &1109608748
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,6 +630,8 @@ MonoBehaviour:
   jumpForce: 12
   speed: 25
   deltaSpeed: 15
+  dashForce: 100
+  dashRecharge: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
