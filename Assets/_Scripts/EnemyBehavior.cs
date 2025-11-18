@@ -27,7 +27,7 @@ public class EnemyBehavior : MonoBehaviour
         //if the enemy sees the player, it will walk towards it
         if (seePlayer)
         {
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * 1.5f * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * 2.5f * Time.deltaTime);
             return;
         }
         //otherwise, it will continue on its path
@@ -36,17 +36,31 @@ public class EnemyBehavior : MonoBehaviour
             CheckDirection();
         }
 
+        //assumes point a is always to the right
         if (movingToPointA)
         {
-            transform.eulerAngles = Vector3.zero;
             transform.position = Vector2.MoveTowards(transform.position, pointA.position, speed * Time.deltaTime);
+            if (transform.position.x > pointA.position.x)
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+            }
+            else
+            {
+                transform.eulerAngles = Vector3.zero;
+            }
         }
         else
         {
-            transform.eulerAngles = new Vector3(0, 180, 0);
             transform.position = Vector2.MoveTowards(transform.position, pointB.position, speed * Time.deltaTime);
+            if (transform.position.x < pointB.position.x)
+            {
+                transform.eulerAngles = Vector3.zero;
+            }
+            else
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+            }
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
