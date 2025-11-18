@@ -11,12 +11,12 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 6f;
     public float deltaSpeed = 6f;
     public float dashForce = 12f;
+    public SpriteRenderer sr;
+    public bool dashed;
 
     //private variables
     private Rigidbody2D rb;
-    private SpriteRenderer sr;
     private BoxCollider2D groundCollider;
-    private bool dashed;
     private bool touchedGround;
     private float dashRecharge;
 
