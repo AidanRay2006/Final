@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     public float dashForce = 12f;
     public SpriteRenderer sr;
     public bool dashed;
+    public bool flipped;
+    public bool hit;
 
     //private variables
     private Rigidbody2D rb;
@@ -32,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
 
         dashed = false;
         dashRecharge = 0;
+
+        hit = false;
     }
 
     // Update is called once per frame
@@ -39,10 +43,15 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 vel = rb.velocity;
 
+        if (hit)
+        {
+            return;
+        }
+
         //handles moving left and right (taken from assignment 4)
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            sr.flipX = true;
+            flipped = true;
             //makes turning feel better
             if (vel.x > 0)
             {
@@ -62,14 +71,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            sr.flipX = false;
+            flipped = false;
             //makes turning feel better
             if (vel.x < 0)
             {
                 vel.x = 0;
             }
 
-                vel.x += deltaSpeed * Time.deltaTime;
+            vel.x += deltaSpeed * Time.deltaTime;
             if (vel.x >= speed && Grounded())
             {
                 vel.x = speed;
@@ -130,6 +139,8 @@ public class PlayerMovement : MonoBehaviour
         {
             touchedGround = true;
         }
+
+        sr.flipX = flipped;
     }
 
     //taken from assignment 4

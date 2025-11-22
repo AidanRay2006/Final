@@ -9,15 +9,19 @@ public class EnemyBehavior : MonoBehaviour
     public bool moving = false;
     public float minDistance = 0.1f;
     public float speed = 2f;
+    public PlayerDetector playerDetecor;
 
     private bool movingToPointA;
-    private bool seePlayer;
     private GameObject player;
+    private bool seePlayer;
 
     // Update is called once per frame
     void Update()
     {
-        //stolen from assignment 4
+        //some code stolen from assignment 4
+
+        player = playerDetecor.player;
+        seePlayer = playerDetecor.seePlayer;
 
         if (!moving)
         {
@@ -27,7 +31,7 @@ public class EnemyBehavior : MonoBehaviour
         //if the enemy sees the player, it will walk towards it
         if (seePlayer)
         {
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * 2.5f * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, transform.position.y), speed * 2.5f * Time.deltaTime);
             return;
         }
         //otherwise, it will continue on its path
@@ -60,22 +64,6 @@ public class EnemyBehavior : MonoBehaviour
             {
                 transform.eulerAngles = new Vector3(0, 180, 0);
             }
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.transform.CompareTag("Player"))
-        {
-            seePlayer = true;
-            player = collision.gameObject;
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.transform.CompareTag("Player"))
-        {
-            seePlayer = false;
         }
     }
 
