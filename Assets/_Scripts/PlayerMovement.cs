@@ -99,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
         //handles jumping (taken from assignment 4)
         if (Input.GetKeyDown(KeyCode.UpArrow) && Grounded())
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+            Bounce(jumpForce);
         }
 
         //handles the dash
@@ -147,5 +147,10 @@ public class PlayerMovement : MonoBehaviour
     private bool Grounded()
     {
         return groundCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
+    }
+
+    public void Bounce(float bounceForce)
+    {
+        rb.AddForce(Vector3.up * bounceForce, ForceMode2D.Impulse);
     }
 }
