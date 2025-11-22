@@ -57,6 +57,8 @@ public class PlayerHitDetector : MonoBehaviour
             player.GetComponent<Rigidbody2D>().AddForce(forceVector * hitForce, ForceMode2D.Impulse);
 
             recharge = 0;
+
+            GameManager.loseHealth();
         }
     }
 }

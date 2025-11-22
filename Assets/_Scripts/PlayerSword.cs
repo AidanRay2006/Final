@@ -82,7 +82,7 @@ public class PlayerSword : MonoBehaviour
     {
         if (collision.transform.CompareTag("Enemy"))
         {
-            GameObject enemy = collision.gameObject;
+            EnemyBehavior enemy = collision.GetComponent<EnemyBehavior>();
 
             int dir = 1;
 
@@ -96,6 +96,7 @@ public class PlayerSword : MonoBehaviour
             if (swung)
             {
                 enemy.GetComponent<Rigidbody2D>().AddForce(forceVector * hitForce, ForceMode2D.Impulse);
+                enemy.loseHealth();
             }
         }
 

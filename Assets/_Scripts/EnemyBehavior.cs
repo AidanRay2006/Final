@@ -9,7 +9,8 @@ public class EnemyBehavior : MonoBehaviour
     public bool moving = false;
     public float minDistance = 0.1f;
     public float speed = 2f;
-    public PlayerDetector playerDetecor;
+    public PlayerDetector playerDetector;
+    public int hitPoints;
 
     private bool movingToPointA;
     private GameObject player;
@@ -20,8 +21,13 @@ public class EnemyBehavior : MonoBehaviour
     {
         //some code stolen from assignment 4
 
-        player = playerDetecor.player;
-        seePlayer = playerDetecor.seePlayer;
+        if (hitPoints <= 0)
+        {
+            Destroy(gameObject);
+        }
+
+        player = playerDetector.player;
+        seePlayer = playerDetector.seePlayer;
 
         if (!moving)
         {
@@ -84,5 +90,10 @@ public class EnemyBehavior : MonoBehaviour
                 movingToPointA = true;
             }
         }
+    }
+
+    public void loseHealth()
+    {
+        hitPoints--;
     }
 }
