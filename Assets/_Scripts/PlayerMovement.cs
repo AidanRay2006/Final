@@ -143,10 +143,11 @@ public class PlayerMovement : MonoBehaviour
         sr.flipX = flipped;
     }
 
-    //taken from assignment 4
+    //some debugging help thanks to ChatGPT
     private bool Grounded()
     {
-        return groundCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, LayerMask.GetMask("Ground"));
+        return hit.collider.CompareTag("Ground");
     }
 
     public void Bounce(float bounceForce)
