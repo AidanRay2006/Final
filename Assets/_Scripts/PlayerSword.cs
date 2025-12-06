@@ -14,6 +14,7 @@ public class PlayerSword : MonoBehaviour
     private PlayerMovement player;
     private int playerDir;
     private bool downSwung;
+    private AudioSource swingSound;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class PlayerSword : MonoBehaviour
         player = FindObjectOfType<PlayerMovement>();
         swingPlace = new Vector2(1, 0);
         downSwingPlace = new Vector2(0, -1);
+        swingSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -40,6 +42,7 @@ public class PlayerSword : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z) && !swung)
         {
+            swingSound.Play();
             if (Input.GetKey(KeyCode.DownArrow))
             {
                 downSwung = true;
@@ -96,12 +99,14 @@ public class PlayerSword : MonoBehaviour
             if (swung)
             {
                 enemy.GetComponent<Rigidbody2D>().AddForce(forceVector * hitForce, ForceMode2D.Impulse);
+                AudioSource.PlayClipAtPoint(enemy.GetComponent<AudioSource>().clip, transform.position);
                 enemy.loseHealth();
             }
         }
 
         if ((collision.transform.CompareTag("Spike") || collision.transform.CompareTag("Enemy")) && downSwung)
         {
+            AudioSource.PlayClipAtPoint(collision.GetComponent<AudioSource>().clip, transform.position);
             player.Bounce(spikeBounceForce);
         }
     }

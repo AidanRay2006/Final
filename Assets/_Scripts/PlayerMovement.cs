@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //handles moving left and right (taken from assignment 4)
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) && vel.x > -speed)
         {
             flipped = true;
             //makes turning feel better
@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
                 vel.x = -speed * 0.5f;
             }
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow) && vel.x < speed)
         {
             flipped = false;
             //makes turning feel better

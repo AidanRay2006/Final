@@ -11,10 +11,18 @@ public class EnemyBehavior : MonoBehaviour
     public float speed = 2f;
     public PlayerDetector playerDetector;
     public int hitPoints;
+    public AudioSource hitSound;
 
     private bool movingToPointA;
     private GameObject player;
     private bool seePlayer;
+    private Animator animator;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+        hitSound = GetComponent<AudioSource>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -37,14 +45,20 @@ public class EnemyBehavior : MonoBehaviour
         //if the enemy sees the player, it will walk towards it
         if (seePlayer)
         {
+            animator.speed = 2;
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, transform.position.y), speed * 2.5f * Time.deltaTime);
             return;
         }
-        //otherwise, it will continue on its path
-        else
+        //if the enemy has fallen far away from its movement points
+        else if (transform.position.y < pointB.transform.position.y - 2f || transform.position.y > pointB.transform.position.y + 2f)
         {
-            CheckDirection();
+            animator.speed = 1;
+            transform.position = new Vector2(transform.position.x + speed * Time.deltaTime, transform.position.y);
+            return;
         }
+        animator.speed = 1;
+        //otherwise, it will continue on its path
+        CheckDirection();
 
         //assumes point a is always to the right
         if (movingToPointA)
@@ -52,11 +66,11 @@ public class EnemyBehavior : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, pointA.position, speed * Time.deltaTime);
             if (transform.position.x > pointA.position.x)
             {
-                transform.eulerAngles = new Vector3(0, 180, 0);
+                transform.eulerAngles = Vector3.zero;
             }
             else
             {
-                transform.eulerAngles = Vector3.zero;
+                transform.eulerAngles = new Vector3(0, 180, 0);
             }
         }
         else
@@ -64,11 +78,11 @@ public class EnemyBehavior : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, pointB.position, speed * Time.deltaTime);
             if (transform.position.x < pointB.position.x)
             {
-                transform.eulerAngles = Vector3.zero;
+                transform.eulerAngles = new Vector3(0, 180, 0);
             }
             else
             {
-                transform.eulerAngles = new Vector3(0, 180, 0);
+                transform.eulerAngles = Vector3.zero;
             }
         }
     }
