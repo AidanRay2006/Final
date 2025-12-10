@@ -13,14 +13,16 @@ public class PlayerMovement : MonoBehaviour
     public float dashForce = 12f;
     public SpriteRenderer sr;
     public bool dashed;
-    public bool flipped;
     public bool hit;
+    public bool flipped;
 
     //private variables
     private Rigidbody2D rb;
     private BoxCollider2D groundCollider;
     private bool touchedGround;
     private float dashRecharge;
+    private Animator animator;
+    private bool jumping;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,11 @@ public class PlayerMovement : MonoBehaviour
         dashRecharge = 0;
 
         hit = false;
+
+        animator = GetComponent<Animator>();
+        jumping = false;
+
+        flipped = false;
     }
 
     // Update is called once per frame
@@ -51,7 +58,11 @@ public class PlayerMovement : MonoBehaviour
         //handles moving left and right (taken from assignment 4)
         if (Input.GetKey(KeyCode.LeftArrow) && vel.x > -speed)
         {
-            flipped = true;
+            sr.flipX = true;
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walking") && !jumping)
+            {
+                animator.Play("Walking");
+            }
             //makes turning feel better
             if (vel.x > 0)
             {
@@ -71,7 +82,11 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.RightArrow) && vel.x < speed)
         {
-            flipped = false;
+            sr.flipX = false;
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walking") && !jumping)
+            {
+                animator.Play("Walking");
+            }
             //makes turning feel better
             if (vel.x < 0)
             {
@@ -92,6 +107,10 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             vel.x = 0;
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !jumping)
+            {
+                animator.Play("Idle");
+            }
         }
 
         rb.velocity = vel;
@@ -100,6 +119,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow) && Grounded())
         {
             Bounce(jumpForce);
+            jumping = true;
+            animator.Play("Jumping");
         }
 
         //handles the dash
@@ -138,9 +159,11 @@ public class PlayerMovement : MonoBehaviour
         if (Grounded())
         {
             touchedGround = true;
+            dashRecharge = 0.5f;
+            jumping = false;
         }
 
-        sr.flipX = flipped;
+        flipped = sr.flipX;
     }
 
     //some debugging help thanks to ChatGPT

@@ -15,6 +15,7 @@ public class PlayerSword : MonoBehaviour
     private int playerDir;
     private bool downSwung;
     private AudioSource swingSound;
+    private SpriteRenderer sr;
 
     // Start is called before the first frame update
     void Start()
@@ -23,9 +24,10 @@ public class PlayerSword : MonoBehaviour
         swung = false;
         downSwung = false;
         player = FindObjectOfType<PlayerMovement>();
-        swingPlace = new Vector2(1, 0);
+        swingPlace = new Vector2(1, -0.248f);
         downSwingPlace = new Vector2(0, -1);
         swingSound = GetComponent<AudioSource>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -40,17 +42,20 @@ public class PlayerSword : MonoBehaviour
             playerDir = 1;
         }
 
+
         if (Input.GetKeyDown(KeyCode.Z) && !swung)
         {
             swingSound.Play();
             if (Input.GetKey(KeyCode.DownArrow))
             {
+                sr.flipX = true;
                 downSwung = true;
                 transform.localEulerAngles = new Vector3(0, 0, 90);
                 transform.localPosition = Vector2.MoveTowards(transform.localPosition, downSwingPlace, 1);
             }
             else
             {
+                sr.flipX = player.sr.flipX;
                 transform.localEulerAngles = Vector3.zero;
                 transform.localPosition = Vector2.MoveTowards(transform.localPosition, swingPlace, playerDir);
             }
@@ -60,7 +65,7 @@ public class PlayerSword : MonoBehaviour
 
         if (swung && rechargeTime >= 0.35f)
         {
-            transform.localPosition = Vector2.MoveTowards(transform.localPosition, Vector2.zero, 1);
+            transform.localPosition = Vector2.MoveTowards(transform.localPosition, new Vector2(0, -0.248f), 1);
             swung = false;
             downSwung = false;
         }
@@ -79,6 +84,7 @@ public class PlayerSword : MonoBehaviour
                 rechargeTime = 0.35f;
             }
         }
+        sr.enabled = swung;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

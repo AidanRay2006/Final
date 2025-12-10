@@ -17,11 +17,16 @@ public class EnemyBehavior : MonoBehaviour
     private GameObject player;
     private bool seePlayer;
     private Animator animator;
+    private SpriteRenderer sr;
+    private float colorTime;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         hitSound = GetComponent<AudioSource>();
+        sr = GetComponent<SpriteRenderer>();
+        sr.color = Color.white;
+        colorTime = 0;
     }
 
     // Update is called once per frame
@@ -85,6 +90,16 @@ public class EnemyBehavior : MonoBehaviour
                 transform.eulerAngles = Vector3.zero;
             }
         }
+
+        //makes the enemy flash when hit
+        if (sr.color == Color.red && colorTime <= 0.15f)
+        {
+            colorTime += Time.deltaTime;
+            if (colorTime >= 0.15f)
+            {
+                sr.color = Color.white;
+            }
+        }
     }
 
     private void CheckDirection()
@@ -109,5 +124,7 @@ public class EnemyBehavior : MonoBehaviour
     public void loseHealth()
     {
         hitPoints--;
+        sr.color = Color.red;
+        colorTime = 0;
     }
 }

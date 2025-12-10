@@ -10,6 +10,7 @@ public class FollowCam : MonoBehaviour
     public float allowableOffset;
     public float speed = 12f;
     public float height;
+    public float xLimit;
 
     // Update is called once per frame
     void Update()
@@ -19,6 +20,11 @@ public class FollowCam : MonoBehaviour
         if (Vector3.Distance(transform.position, follow.transform.position + Vector3.back * zDistance) > allowableOffset)
         {
             transform.position = Vector3.MoveTowards(transform.position, (new Vector3(follow.transform.position.x, follow.transform.position.y + height)) + Vector3.back * zDistance, speed * Time.deltaTime);
+        }
+
+        if (transform.position.x >= xLimit)
+        {
+            transform.position = new Vector3(xLimit, transform.position.y, -zDistance);
         }
     }
 }

@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverScreen;
     public GameObject pauseScreen;
     public GameObject[] hearts;
+    public static bool endGame;
+    public GameObject winScreen;
+    public TextMeshProUGUI winTMPText;
+    public static string winMessage;
 
     // Start is called before the first frame update
     void Start()
@@ -18,11 +22,20 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         gameOverScreen.SetActive(false);
         pauseScreen.SetActive(false);
+        winScreen.SetActive(false);
+        endGame = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (endGame)
+        {
+            winTMPText.text = winMessage;
+            winScreen.SetActive(true);
+            return;
+        }
+
         //set the amount of hearts on screen equal to how much health the player has left
         for (int i = 0; i < hearts.Length; i++)
         {
