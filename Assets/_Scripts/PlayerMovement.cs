@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     private float dashRecharge;
     private Animator animator;
     private bool jumping;
+    private AudioSource dashSound;
+    private TrailRenderer trail;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,13 @@ public class PlayerMovement : MonoBehaviour
         jumping = false;
 
         flipped = false;
+
+        dashSound = GetComponent<AudioSource>();
+
+        sr.color = Color.white;
+
+        trail = GetComponent<TrailRenderer>();
+        trail.emitting = false;
     }
 
     // Update is called once per frame
@@ -115,8 +124,8 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = vel;
 
-        //handles jumping (taken from assignment 4)
-        if (Input.GetKeyDown(KeyCode.UpArrow) && Grounded())
+        //handles jumping
+        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Space)) && Grounded())
         {
             Bounce(jumpForce);
             jumping = true;
@@ -126,6 +135,9 @@ public class PlayerMovement : MonoBehaviour
         //handles the dash
         if (Input.GetKeyDown(KeyCode.X) && !dashed)
         {
+            dashSound.Play();
+            trail.emitting = true;
+
             if (sr.flipX)
             {
                 rb.AddForce(Vector2.left * dashForce, ForceMode2D.Impulse);
@@ -144,6 +156,7 @@ public class PlayerMovement : MonoBehaviour
         if (dashed && dashRecharge == 0.5f && touchedGround)
         {
             dashed = false;
+            trail.emitting = false;
         }
         else
         {
