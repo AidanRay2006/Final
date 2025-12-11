@@ -153,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
 
         //make sure enough time has passed between when the player last dashed
         //so that they can dash again, and they have touched the ground since then
-        if (dashed && dashRecharge == 0.5f && touchedGround)
+        if (dashed && dashRecharge >= 0.5f && touchedGround)
         {
             dashed = false;
             trail.emitting = false;

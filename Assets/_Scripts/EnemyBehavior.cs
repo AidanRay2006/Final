@@ -18,7 +18,7 @@ public class EnemyBehavior : MonoBehaviour
     private bool seePlayer;
     private Animator animator;
     private SpriteRenderer sr;
-    private float colorTime;
+    public float colorTime;
 
     private void Start()
     {
@@ -32,6 +32,14 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        colorTime += Time.deltaTime;
+        //makes the enemy flash when hit
+        if (colorTime >= 0.15f)
+        {
+            sr.color = Color.white;
+        }
+
         //some code stolen from assignment 4
 
         if (hitPoints <= 0)
@@ -90,16 +98,6 @@ public class EnemyBehavior : MonoBehaviour
                 transform.eulerAngles = Vector3.zero;
             }
         }
-
-        //makes the enemy flash when hit
-        if (sr.color == Color.red && colorTime <= 0.15f)
-        {
-            colorTime += Time.deltaTime;
-            if (colorTime >= 0.15f)
-            {
-                sr.color = Color.white;
-            }
-        }
     }
 
     private void CheckDirection()
@@ -124,7 +122,7 @@ public class EnemyBehavior : MonoBehaviour
     public void loseHealth()
     {
         hitPoints--;
-        sr.color = Color.red;
         colorTime = 0;
+        sr.color = Color.red;
     }
 }
