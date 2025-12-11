@@ -1,31 +1,19 @@
 #### MCS 1643 README file
-# **Replace this Project Name**
+# **Final Project**
 
-#### Author: *Replace this with your name*
+#### Author: *Aidan Ray*
 
-##### Modified: *2024-09-06*
+##### Modified: *2025-12-11*
 
 <br>
-
-#### Questions for tutorial assignments: (remove this section for projects)
-**Which tutorial is this? **
-
-**1. Did you make any additions beyond the tutorial requirements? If so, what?**
-> &nbsp;
-><i>(let me know what to look for, any additional keys to use, etc.)</i>   
-> &nbsp;
-
-**2. Did anything give you particular trouble?
-> &nbsp;
-><i>(If something in your assignment doesn't work or you think part of the tutorial can be improved, explain here)</i>   
-> &nbsp;
 
 #### Questions for projects: (remove this section for tutorial assignments)
 **1. What are the controls to your game? How do we play?**   
 
-> &nbsp;
+> &nbsp; Left and right arrow keys to move, up arrow or space to jump, z to swing the sword (hold the down arrow while pressing to swing down), and x to dash
 ><i>(art, music, etc. Just tell us where you got it, link it here)</i>   
-> &nbsp;
+> &nbsp; Pixel font: https://www.dafont.com/pix32.font
+> Castlevania 1986 music: https://downloads.khinsider.com/game-soundtracks/album/castlevania
  
 
 
@@ -39,15 +27,16 @@
 
 **3. Any assets used that you didn't create yourself?**   
 
-> &nbsp;
+> &nbsp; Pixel font and Castlevania 1986 music.
 ><i>(art, music, etc. Just tell us where you got it, link it here)</i>   
-> &nbsp;
+> &nbsp; Pixel font: https://www.dafont.com/pix32.font
+> Castlevania 1986 music: https://downloads.khinsider.com/game-soundtracks/album/castlevania
  
 
 
 **4. Did you receive help from anyone outside this class or from anyone in this class that is not in a group with you?**   
 
-> &nbsp;
+> &nbsp; No
 ><i>(list their names and what they helped with)</i>   
 > &nbsp;
  
@@ -55,7 +44,7 @@
 
 **5. Did you get help from any AI Code Assistants?**   
 
-> &nbsp;
+> &nbsp; ChatGPT and Gemini boiht answered simple questions that I had, but they did not outright create code for me as far as I can recall. If I used AI to generate any code, it should be written as a comment in the script.
 ><i>(Including things like Chat-GPT, Copilot, etc. Tell us which .cs file to look in for the citation and describe what you learned)</i>   
 > &nbsp;
  
@@ -63,7 +52,7 @@
 
 **6. Did you get help from any online websites, videos, or tutorials?**   
 
-> &nbsp;
+> &nbsp; Unity Scripting API
 ><i>(link them here)</i>   
 > &nbsp;
  
